@@ -1,6 +1,8 @@
 package com.example.proxy.service;
 
 import com.example.proxy.http.HttpClient;
+import com.example.proxy.interfaces.ICacheService;
+import com.example.proxy.interfaces.ILoadBalancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProxyService {
 
-    private final CacheService<String, String> cacheService;
-    private final LoadBalancer loadBalancer;
+    private final ICacheService<String, String> ICacheService;
+    private final ILoadBalancer loadBalancer;
     private final HttpClient httpClient;
 
     public String forwardGet(String pathAndQuery) {
         String cacheKey = buildCacheKey(pathAndQuery);
 
-        String cached = cacheService.get(cacheKey);
+        String cached = ICacheService.get(cacheKey);
         if (cached != null) {
             return cached;
         }
@@ -27,7 +29,7 @@ public class ProxyService {
         String response = httpClient.forwardGet(backend, pathAndQuery);
 
         if (response != null) {
-            cacheService.put(cacheKey, response);
+            ICacheService.put(cacheKey, response);
         }
 
         return response;

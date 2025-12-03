@@ -1,7 +1,7 @@
 package com.example.proxy.service;
 
+import com.example.proxy.interfaces.ICacheService;
 import jakarta.annotation.PreDestroy;
-import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -14,8 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Thread-safe in-memory cache with TTL-based expiration and background cleanup.
  */
-@Service
-public class InMemoryCacheService<K, V> implements CacheService<K, V> {
+public class InMemoryCacheService<K, V> implements ICacheService<K, V> {
 
     private static final Duration DEFAULT_TTL = Duration.ofMinutes(1);
     private static final Duration DEFAULT_CLEANUP_INTERVAL = Duration.ofSeconds(30);
@@ -60,6 +59,11 @@ public class InMemoryCacheService<K, V> implements CacheService<K, V> {
     public void put(K key, V value) {
         long expiresAt = System.nanoTime() + ttl.toNanos();
         store.put(key, new CacheEntry<>(value, expiresAt));
+    }
+
+    @Override
+    public void evict(K key) {
+        store.remove(key);
     }
 
     private void evictExpired() {

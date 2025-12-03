@@ -7,25 +7,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-/**
- * Lightweight HTTP forwarder built on RestTemplate.
- */
+// Lightweight HTTP forwarder built on RestTemplate.
 @Component
 public class HttpClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    /**
-     * Forward a GET request to the target backend and return the raw body as a string.
-     */
+    // Forward a GET request to the target backend and return the raw body as a string.
     public String forwardGet(String baseUrl, String pathAndQuery) {
         String target = buildUrl(baseUrl, pathAndQuery);
         return restTemplate.getForObject(target, String.class);
     }
 
-    /**
-     * Forward a POST request with a JSON payload to the target backend and return the raw body.
-     */
+    // Forward a POST request with a JSON payload to the target backend and return the raw body.
     public String forwardPost(String baseUrl, String pathAndQuery, Object body) {
         String target = buildUrl(baseUrl, pathAndQuery);
         HttpHeaders headers = new HttpHeaders();
