@@ -1,4 +1,9 @@
 package com.example.proxy.service;
 
-public class LoadBalancer {
+/**
+ * Contract for selecting the next backend target URL.
+ */
+public interface LoadBalancer {
+
+    String getNextUrl();
 }
