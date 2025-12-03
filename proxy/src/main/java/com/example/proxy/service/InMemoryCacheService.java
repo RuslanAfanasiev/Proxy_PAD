@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class InMemoryCacheService<K, V> implements ICacheService<K, V> {
 
-    private static final Duration DEFAULT_TTL = Duration.ofMinutes(1);
+    private static final Duration DEFAULT_TTL = Duration.ofMinutes(60);
     private static final Duration DEFAULT_CLEANUP_INTERVAL = Duration.ofSeconds(30);
 
     private final Duration ttl;

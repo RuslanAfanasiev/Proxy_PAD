@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/proxy")
@@ -15,18 +18,23 @@ public class SyncListenerController {
     private final ICacheService<String, String> ICacheService;
 
     @PostMapping("/invalidate/{id}")
-    public void invalidateMovie(@PathVariable Long id) {
-        evictKeys(id);
+    public ResponseEntity<Map<String, Object>> invalidateMovie(@PathVariable Long id) {
+        return evictKeys(id);
     }
 
     // Legacy endpoint used by sync_node
     @PostMapping("/cache/invalidate/movies/{id}")
-    public void invalidateMovieLegacy(@PathVariable Long id) {
-        evictKeys(id);
+    public ResponseEntity<Map<String, Object>> invalidateMovieLegacy(@PathVariable Long id) {
+        return evictKeys(id);
     }
 
-    private void evictKeys(Long id) {
+    private ResponseEntity<Map<String, Object>> evictKeys(Long id) {
         ICacheService.evict("/movies/" + id);
         ICacheService.evict("/api/movies/" + id);
+        return ResponseEntity.ok(Map.of(
+                "message", "Cache invalidation processed",
+                "id", id,
+                "evictedKeys", new String[]{"/movies/" + id, "/api/movies/" + id}
+        ));
     }
 }
