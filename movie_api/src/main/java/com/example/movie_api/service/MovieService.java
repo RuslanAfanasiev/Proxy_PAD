@@ -44,31 +44,37 @@ public class MovieService {
                 .map(existing -> {
                     existing.setTitle(updatedMovie.getTitle());
                     existing.setRating(updatedMovie.getRating());
-                    return updateMovie(existing);
+                    Movie saved = movieRepository.save(existing);
+                    notifyUpdate(saved);
+                    return saved;
                 });
     }
 
-    public Movie updateMovie(Movie movie) {
-        Movie saved = movieRepository.save(movie);
-        notifySyncNode(saved);
-        return saved;
+    private void notifyUpdate(Movie movie) {
+        String url = syncNodeUrl + "/sync/movies";
+        try {
+            restTemplate.postForLocation(url, movie);
+        } catch (Exception ex) {
+            log.warn("Failed to notify Sync_Node for update {}: {}", movie.getId(), ex.getMessage());
+        }
     }
 
     public boolean deleteMovie(Long id) {
         return movieRepository.findById(id)
                 .map(existing -> {
                     movieRepository.delete(existing);
+                    notifyDelete(id);
                     return true;
                 })
                 .orElse(false);
     }
 
-    private void notifySyncNode(Movie movie) {
-        String url = syncNodeUrl + "/sync/movies";
+    private void notifyDelete(Long id) {
+        String url = syncNodeUrl + "/sync/invalidate/" + id;
         try {
-            restTemplate.postForLocation(url, movie);
+            restTemplate.postForLocation(url, null);
         } catch (Exception ex) {
-            log.warn("Failed to notify Sync_Node at {} for movie {}: {}", url, movie.getId(), ex.getMessage());
+            log.warn("Failed to notify Sync_Node for delete {}: {}", id, ex.getMessage());
         }
     }
 }

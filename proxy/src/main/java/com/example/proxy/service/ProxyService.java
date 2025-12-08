@@ -40,6 +40,17 @@ public class ProxyService {
         return httpClient.forwardPost(backend, pathAndQuery, body);
     }
 
+
+    public String forwardPut(String pathAndQuery, Object body) {
+        String backend = loadBalancer.getNextUrl();
+        return httpClient.forwardPut(backend, pathAndQuery, body);
+    }
+
+    public String forwardDelete(String pathAndQuery) {
+        String backend = loadBalancer.getNextUrl();
+        return httpClient.forwardDelete(backend, pathAndQuery);
+    }
+
     private String buildCacheKey(String pathAndQuery) {
         return pathAndQuery;
     }

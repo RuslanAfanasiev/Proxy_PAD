@@ -20,16 +20,15 @@ public class SyncService {
         this.proxyUrl = proxyUrl;
     }
 
-    //Notify the proxy to invalidate cached content for a specific movie.
     public void invalidateMovieCache(Long movieId) {
         String target = UriComponentsBuilder.fromHttpUrl(proxyUrl)
-                .path("/cache/invalidate/movies/")
+                .path("/proxy/cache/invalidate/movies/")
                 .path(String.valueOf(movieId))
                 .toUriString();
         try {
             restTemplate.postForLocation(target, null);
         } catch (Exception ex) {
-            log.warn("Failed to notify proxy for movie cache invalidation (movieId={}): {}", movieId, ex.getMessage());
+            log.warn("Failed to notify proxy for movie {}: {}", movieId, ex.getMessage());
         }
     }
 }

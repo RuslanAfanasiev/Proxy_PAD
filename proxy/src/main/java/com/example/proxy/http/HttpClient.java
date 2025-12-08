@@ -2,6 +2,7 @@ package com.example.proxy.http;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -25,6 +26,20 @@ public class HttpClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return restTemplate.postForObject(target, new HttpEntity<>(body, headers), String.class);
+    }
+
+    public String forwardPut(String baseUrl, String pathAndQuery, Object body) {
+        String target = buildUrl(baseUrl, pathAndQuery);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return restTemplate.exchange(target, HttpMethod.PUT,
+                new HttpEntity<>(body, headers), String.class).getBody();
+    }
+
+    public String forwardDelete(String baseUrl, String pathAndQuery) {
+        String target = buildUrl(baseUrl, pathAndQuery);
+        return restTemplate.exchange(target, HttpMethod.DELETE,
+                null, String.class).getBody();
     }
 
     private String buildUrl(String baseUrl, String pathAndQuery) {

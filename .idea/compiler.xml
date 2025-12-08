@@ -10,7 +10,7 @@
         <module name="common" />
         <module name="commons" />
       </profile>
-      <profile name="Annotation profile for movie_api" enabled="true">
+      <profile name="Annotation profile for sync_node" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
