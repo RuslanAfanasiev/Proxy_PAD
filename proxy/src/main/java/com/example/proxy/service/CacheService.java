@@ -1,5 +1,6 @@
 package com.example.proxy.service;
 
+import com.example.proxy.interfaces.ICacheService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CacheService {
+public class CacheService implements ICacheService<String, Object> {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -28,6 +29,7 @@ public class CacheService {
      * @param key Cache key (usually the request URL and method)
      * @param value Response object to cache
      */
+    @Override
     public void put(String key, Object value) {
         try {
             redisTemplate.opsForValue().set(key, value, cacheTtl, TimeUnit.MILLISECONDS);
@@ -43,6 +45,7 @@ public class CacheService {
      * @param key Cache key
      * @return Cached object or null if not found
      */
+    @Override
     public Object get(String key) {
         try {
             Object cached = redisTemplate.opsForValue().get(key);
@@ -70,6 +73,16 @@ public class CacheService {
         } catch (Exception e) {
             log.error("Error invalidating cache for key: {}", key, e);
         }
+    }
+
+    /**
+     * Evict cache for specific key (alias for invalidate to implement ICacheService).
+     *
+     * @param key Cache key to evict
+     */
+    @Override
+    public void evict(String key) {
+        invalidate(key);
     }
 
     /**

@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SyncListenerController {
 
-    private final ICacheService<String, String> ICacheService;
+    private final ICacheService<String, Object> cacheService;
 
     @PostMapping("/invalidate/{id}")
     public ResponseEntity<Map<String, Object>> invalidateMovie(@PathVariable Long id) {
@@ -29,8 +29,8 @@ public class SyncListenerController {
     }
 
     private ResponseEntity<Map<String, Object>> evictKeys(Long id) {
-        ICacheService.evict("/movies/" + id);
-        ICacheService.evict("/api/movies/" + id);
+        cacheService.evict("/movies/" + id);
+        cacheService.evict("/api/movies/" + id);
         return ResponseEntity.ok(Map.of(
                 "message", "Cache invalidation processed",
                 "id", id,
