@@ -1,15 +1,17 @@
-package org.example.model;
+package org.example.dto;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie extends BaseEntity  {
+public class MovieDTO {
+    private Long id;
     private String title;
     private double rating;
+    private LocalDateTime lastChangedAt;
 }
