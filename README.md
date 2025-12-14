@@ -269,6 +269,61 @@ Verificați logs pentru:
 POST/PUT/DELETE → Proxy → Forward to DW → Success → Invalidate Cache
 ```
 
+## Deployment
+
+### AWS Deployment
+
+The application can be deployed to AWS ECS using GitHub Actions. See [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md) for detailed instructions.
+
+#### Quick Start
+
+1. **Setup AWS Resources**
+   ```bash
+   chmod +x .aws/setup-aws-resources.sh
+   ./.aws/setup-aws-resources.sh
+   ```
+
+2. **Configure GitHub Secrets**
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+
+3. **Deploy**
+   ```bash
+   git push origin main
+   ```
+
+The GitHub Actions workflow will automatically build, push to ECR, and deploy to ECS.
+
+### Docker Deployment
+
+#### Build and Run with Docker
+
+```bash
+# Build the image
+docker build -t proxy-pad .
+
+# Run the container
+docker run -d \
+  -p 8080:8080 \
+  -p 9001:9001 \
+  -p 9002:9002 \
+  --name proxy-pad \
+  proxy-pad
+```
+
+#### Using Docker Compose
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
 ## Autori
 
 Implementat conform specificațiilor laboratorului pentru:

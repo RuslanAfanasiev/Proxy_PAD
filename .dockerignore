@@ -1,0 +1,54 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+LICENSE
+docs/
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Build artifacts
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+src/test/
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# AWS
+.aws/setup-aws-resources.sh
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+tmp/
+temp/
