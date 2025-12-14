@@ -35,6 +35,7 @@ public class ProxyService {
             log.info("Cache HIT for GET {}", path);
             return ResponseEntity.ok()
                     .header("X-Cache", "HIT")
+                    .header("X-Proxy-App", "smart-proxy")
                     .body(cachedResponse.toString());
         }
 
@@ -59,6 +60,7 @@ public class ProxyService {
 
             return ResponseEntity.status(response.getStatusCode())
                     .header("X-Cache", "MISS")
+                    .header("X-Proxy-App", "smart-proxy")
                     .header("X-DW-Node", dwNode)
                     .body(response.getBody());
 

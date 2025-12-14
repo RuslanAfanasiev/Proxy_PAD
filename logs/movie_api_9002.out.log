@@ -1,0 +1,54 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-12-14T20:34:08.357+02:00  INFO 10480 --- [movie_api] [           main] c.example.movie_api.MovieApiApplication  : Starting MovieApiApplication v0.0.1-SNAPSHOT using Java 21.0.9 with PID 10480 (C:\Users\mogag\Desktop\Universitate\PAD\Lab 3\movie_api\target\movie_api-0.0.1-SNAPSHOT.jar started by mogag in C:\Users\mogag\Desktop\Universitate\PAD\Lab 3)
+2025-12-14T20:34:08.360+02:00  INFO 10480 --- [movie_api] [           main] c.example.movie_api.MovieApiApplication  : No active profile set, falling back to 1 default profile: "default"
+2025-12-14T20:34:09.152+02:00  INFO 10480 --- [movie_api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-14T20:34:09.218+02:00  INFO 10480 --- [movie_api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 1 JPA repository interface.
+2025-12-14T20:34:10.137+02:00  INFO 10480 --- [movie_api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9002 (http)
+2025-12-14T20:34:10.158+02:00  INFO 10480 --- [movie_api] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-14T20:34:10.158+02:00  INFO 10480 --- [movie_api] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-12-14T20:34:10.204+02:00  INFO 10480 --- [movie_api] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-14T20:34:10.205+02:00  INFO 10480 --- [movie_api] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1763 ms
+2025-12-14T20:34:10.496+02:00  INFO 10480 --- [movie_api] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-14T20:34:10.554+02:00  INFO 10480 --- [movie_api] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-12-14T20:34:10.588+02:00  INFO 10480 --- [movie_api] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-14T20:34:10.956+02:00  INFO 10480 --- [movie_api] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-14T20:34:10.994+02:00  INFO 10480 --- [movie_api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-14T20:34:11.280+02:00  INFO 10480 --- [movie_api] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5ce3409b
+2025-12-14T20:34:11.281+02:00  INFO 10480 --- [movie_api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-14T20:34:11.317+02:00  WARN 10480 --- [movie_api] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-14T20:34:11.342+02:00  INFO 10480 --- [movie_api] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.11
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-14T20:34:12.191+02:00  INFO 10480 --- [movie_api] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-14T20:34:12.241+02:00  INFO 10480 --- [movie_api] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-14T20:34:13.200+02:00  WARN 10480 --- [movie_api] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-14T20:34:13.723+02:00  INFO 10480 --- [movie_api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9002 (http) with context path '/'
+2025-12-14T20:34:13.737+02:00  INFO 10480 --- [movie_api] [           main] c.example.movie_api.MovieApiApplication  : Started MovieApiApplication in 5.993 seconds (process running for 6.756)
+2025-12-14T20:34:35.541+02:00  INFO 10480 --- [movie_api] [nio-9002-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-14T20:34:35.546+02:00  INFO 10480 --- [movie_api] [nio-9002-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-14T20:34:35.547+02:00  INFO 10480 --- [movie_api] [nio-9002-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0 where m1_0.id=?
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0 where m1_0.id=?
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0 where m1_0.id=?
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0
+Hibernate: select m1_0.id,m1_0.last_changed_at,m1_0.rating,m1_0.title from movie m1_0 where m1_0.id=?

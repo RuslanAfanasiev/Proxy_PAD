@@ -1,0 +1,4 @@
+org/example/entities/BaseEntity.class
+org/example/mapper/MovieMapper.class
+org/example/entities/Movie.class
+org/example/dto/MovieDTO.class

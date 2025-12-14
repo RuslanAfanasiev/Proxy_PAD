@@ -29,12 +29,16 @@ public class SyncListenerController {
     }
 
     private ResponseEntity<Map<String, Object>> evictKeys(Long id) {
-        cacheService.evict("/movies/" + id);
+        cacheService.evict("GET:/api/movies");
+        cacheService.evict("GET:/api/movies/" + id);
+
+        // Backward-compatible evictions (older key formats)
+        cacheService.evict("/api/movies");
         cacheService.evict("/api/movies/" + id);
         return ResponseEntity.ok(Map.of(
                 "message", "Cache invalidation processed",
                 "id", id,
-                "evictedKeys", new String[]{"/movies/" + id, "/api/movies/" + id}
+                "evictedKeys", new String[]{"GET:/api/movies", "GET:/api/movies/" + id, "/api/movies", "/api/movies/" + id}
         ));
     }
 }

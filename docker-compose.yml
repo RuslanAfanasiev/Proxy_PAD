@@ -24,6 +24,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: adminpass
+      PGPASSWORD: adminpass
     volumes:
       - pg_replica:/var/lib/postgresql/data
     command: >

@@ -97,6 +97,8 @@ public class ProxyController {
      */
     @GetMapping("/health")
     public ResponseEntity<String> health() {
-        return ResponseEntity.ok("{\"status\":\"UP\",\"service\":\"Smart Proxy\"}");
+        return ResponseEntity.ok()
+                .header("X-Proxy-App", "smart-proxy")
+                .body("{\"status\":\"UP\",\"service\":\"Smart Proxy\"}");
     }
 }

@@ -2,6 +2,7 @@ package com.example.sync_node.controller;
 
 import com.example.sync_node.service.SyncService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ public class SyncController {
     private final SyncService syncService;
 
     @PostMapping("/invalidate/{id}")
-    public void invalidateMovie(@PathVariable Long id) {
-        syncService.invalidateMovieCache(id);
+    public ResponseEntity<String> invalidateMovie(@PathVariable Long id) {
+        return syncService.invalidateMovieCache(id);
     }
 }

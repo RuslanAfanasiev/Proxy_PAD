@@ -38,6 +38,11 @@ Client → Smart Proxy → Load Balancer → Data Warehouse Nodes
 
 ## Cerințe Preliminare
 
+#### Sync Node (sync_node)
+- **Port**: 9099
+- **Rol**: primeste cereri de invalidate si notifica proxy-ul sa stearga cheile din cache.
+- **Endpoint**: `POST /sync/invalidate/{id}` (ruleaza pe `http://localhost:9099`)
+
 1. **Java 21**
 2. **Maven 3.x**
 3. **PostgreSQL** (rulând pe port 5432)
@@ -56,6 +61,8 @@ psql -c "CREATE DATABASE proxydb;"
 ```
 
 ### 2. Pornire Redis
+
+Redis este optional; daca nu ruleaza pe `localhost:6379`, proxy-ul foloseste automat un cache in-memory (cu TTL) pentru a putea testa caching/invalidation local.
 
 ```bash
 # Linux/Mac
@@ -88,6 +95,15 @@ cd movie_api
 ```bash
 # În alt terminal
 cd proxy
+./mvnw clean install
+./mvnw spring-boot:run
+```
+
+#### Pornire Sync Node (port 9099)
+
+```bash
+# AZn alt terminal
+cd sync_node
 ./mvnw clean install
 ./mvnw spring-boot:run
 ```
@@ -154,6 +170,25 @@ curl -v http://localhost:8080/api/movies
 curl -v http://localhost:8080/api/movies
 ```
 
+### Cache Invalidation prin Sync Node
+
+`sync_node` expune `POST /sync/invalidate/{id}` si notifica proxy-ul sa invalideze:
+- `GET:/api/movies`
+- `GET:/api/movies/{id}`
+
+```bash
+curl -X POST http://localhost:9099/sync/invalidate/1
+```
+
+### Debug cache (proxy)
+
+Pentru a verifica daca o cheie exista in cache (Redis sau fallback in-memory):
+
+```bash
+curl "http://localhost:8080/proxy/cache/has?key=GET:/api/movies"
+curl "http://localhost:8080/proxy/cache/has?key=GET:/api/movies/1"
+```
+
 ## Caracteristici Implementate
 
 ### ✅ Etapa 1 - Data Warehouse
@@ -194,13 +229,24 @@ proxy.datawarehouse.nodes=http://localhost:9001,http://localhost:9002
 proxy.cache.ttl=300000
 ```
 
+### Sync Node (application.properties)
+
+```properties
+server.port=9099
+proxy.url=http://localhost:8080
+
+# Timeouts pentru apelul catre proxy (ms)
+sync.proxy.connect-timeout-ms=2000
+sync.proxy.read-timeout-ms=2000
+```
+
 ### Data Warehouse (application.properties)
 
 ```properties
 server.port=9001
 spring.datasource.url=jdbc:postgresql://localhost:5432/proxydb
 spring.datasource.username=admin
-spring.datasource.password=Cascaval24#
+spring.datasource.password=adminpass
 ```
 
 ## Testare
