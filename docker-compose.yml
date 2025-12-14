@@ -1,0 +1,37 @@
+services:
+  postgres-primary:
+    image: postgres:16
+    container_name: postgres-primary
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass
+      POSTGRES_DB: proxydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_primary:/var/lib/postgresql/data
+    command: >
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=10
+      -c hot_standby=on
+
+  postgres-replica:
+    image: postgres:16
+    container_name: postgres-replica
+    depends_on:
+      - postgres-primary
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpass
+    volumes:
+      - pg_replica:/var/lib/postgresql/data
+    command: >
+      bash -c "
+      until pg_basebackup -h postgres-primary -D /var/lib/postgresql/data -U admin -Fp -Xs -P -R;
+      do sleep 5; done;
+      postgres"
+
+volumes:
+  pg_primary:
+  pg_replica:
